@@ -1,0 +1,8 @@
+{
+  "name": "Render Remotion - Sono Cardiovascular",
+  "nodes": [
+    { "parameters": { "path": "render-sono-cardio", "responseMode": "lastNode" }, "name": "Webhook", "type": "n8n-nodes-base.webhook", "typeVersion": 2, "position": [0, 0] },
+    { "parameters": { "command": "npm run render && npm run render:still && npm run export" }, "name": "Render Remotion", "type": "n8n-nodes-base.executeCommand", "typeVersion": 1, "position": [260, 0] }
+  ],
+  "connections": { "Webhook": { "main": [[{ "node": "Render Remotion", "type": "main", "index": 0 }]] } }
+}

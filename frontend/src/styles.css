@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  background: #07100e;
+  font-family: Inter, SF Pro Display, Poppins, system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #07100e;
+}
