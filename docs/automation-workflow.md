@@ -13,11 +13,10 @@ Receber uma requisição HTTP autorizada, normalizar o payload, validar o gatilh
 - **Path:** `/webhook/render-sono-cardio`
 - **Header obrigatório:** `x-render-secret`
 - **Variável ambiente no N8N:** `RENDER_WEBHOOK_SECRET`
-- **Diretório do projeto:** `PROJECT_ROOT` apontando para a raiz do repositório montado no ambiente do N8N
 
 ## Segurança
 
-O workflow não armazena secrets reais no repositório. O valor real de `RENDER_WEBHOOK_SECRET` deve ser configurado no ambiente do N8N ou no provedor de deploy. Também configure `PROJECT_ROOT` para que o node Execute Command encontre o `package.json`.
+O workflow não armazena secrets no repositório. O valor real de `RENDER_WEBHOOK_SECRET` deve ser configurado no ambiente do N8N ou no provedor de deploy.
 
 A validação compara o header recebido com a variável ambiente antes de executar qualquer comando de renderização.
 
@@ -45,7 +44,7 @@ curl -X POST "$N8N_BASE_URL/webhook/render-sono-cardio" \
 1. **Gatilho Webhook - Render:** recebe a requisição HTTP.
 2. **Normalizar payload:** define `requestId`, `compositionId`, `outputPath`, `renderCommand` e `providedSecret`.
 3. **Validar gatilho:** bloqueia chamadas sem secret configurado ou com header inválido.
-4. **Renderizar Remotion:** entra em `PROJECT_ROOT` e executa `npm run render && npm run render:still && npm run export`.
+4. **Renderizar Remotion:** executa `npm run render && npm run render:still && npm run export`.
 5. **Responder sucesso / não autorizado:** devolve JSON padronizado para o cliente.
 
 ## Resposta de sucesso
@@ -74,7 +73,3 @@ curl -X POST "$N8N_BASE_URL/webhook/render-sono-cardio" \
   "message": "Gatilho rejeitado. Configure RENDER_WEBHOOK_SECRET no N8N e envie o header x-render-secret correto."
 }
 ```
-
-## Diagnóstico de falhas
-
-Se o workflow não aparecer no GitHub Actions, confirme que os YAMLs estão em `.github/workflows/`. Se o N8N disparar mas não renderizar, valide `PROJECT_ROOT`, `RENDER_WEBHOOK_SECRET`, instalação de dependências e disponibilidade de Chrome/Chromium para o Remotion. Veja também `docs/workflow-diagnostics.md`.

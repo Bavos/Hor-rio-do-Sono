@@ -2,17 +2,6 @@ name: Remotion Render
 
 on:
   workflow_dispatch:
-    inputs:
-      composition_id:
-        description: 'ID da composição Remotion a renderizar'
-        required: false
-        default: 'SleepTimingCommercial'
-      output_path:
-        description: 'Caminho do MP4 final'
-        required: false
-        default: 'downloads/videos/sleep-timing-commercial.mp4'
-  repository_dispatch:
-    types: [render-sleep-timing-commercial]
   push:
     branches: [main]
 
@@ -31,12 +20,8 @@ jobs:
         run: npm ci
       - name: Validate lint
         run: npm run lint
-      - name: Resolve trigger inputs
-        run: |
-          echo "COMPOSITION_ID=${{ github.event.inputs.composition_id || github.event.client_payload.composition_id || 'SleepTimingCommercial' }}" >> $GITHUB_ENV
-          echo "OUTPUT_PATH=${{ github.event.inputs.output_path || github.event.client_payload.output_path || 'downloads/videos/sleep-timing-commercial.mp4' }}" >> $GITHUB_ENV
       - name: Render video
-        run: npx remotion render remotion/index.ts "$COMPOSITION_ID" "$OUTPUT_PATH"
+        run: npm run render
       - name: Render thumbnail
         run: npm run render:still
       - name: Export mp4
