@@ -111,21 +111,18 @@ As variáveis estão em `.env` como valores não sensíveis de desenvolvimento:
 | `PUBLIC_APP_NAME` | Nome público do projeto |
 | `REMOTION_COMPOSITION_ID` | ID da composição Remotion |
 | `REMOTION_OUTPUT` | Caminho esperado para o MP4 final |
-| `RENDER_WEBHOOK_SECRET` | Secret usado pelo gatilho Webhook do N8N; configurar valor real apenas no ambiente de execução |
 
 Nunca salve tokens, chaves de API ou credenciais reais no repositório. Use secrets do provedor de CI/CD em produção.
 
 ## Automação N8N
 
-O arquivo `automations/n8n-render-workflow.json` contém um fluxo com gatilho explícito para renderização:
+O arquivo `automations/n8n-render-workflow.json` contém um fluxo base com:
 
-1. **Gatilho Webhook POST** em `/webhook/render-sono-cardio`.
-2. Normalização de payload com `requestId`, `compositionId` e `outputPath`.
-3. Validação do header `x-render-secret` contra `RENDER_WEBHOOK_SECRET`.
-4. Execução do comando `npm run render && npm run render:still && npm run export`.
-5. Resposta JSON de sucesso ou erro não autorizado.
+1. Webhook de disparo.
+2. Execução do comando `npm run render && npm run render:still && npm run export`.
+3. Saída do render nos diretórios `downloads/`.
 
-A documentação completa do gatilho, payload e exemplo de `curl` está em `docs/automation-workflow.md`. Em produção, recomenda-se isolar a renderização em fila, validar payloads, registrar logs e limitar permissões do worker.
+Em produção, recomenda-se isolar a renderização em fila, validar payloads, registrar logs e limitar permissões do worker.
 
 ## Fontes científicas usadas
 
