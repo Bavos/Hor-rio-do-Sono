@@ -1,0 +1,52 @@
+name: Remotion Render
+
+on:
+  workflow_dispatch:
+    inputs:
+      composition_id:
+        description: 'ID da composição Remotion a renderizar'
+        required: false
+        default: 'SleepTimingCommercial'
+      output_path:
+        description: 'Caminho do MP4 final'
+        required: false
+        default: 'downloads/videos/sleep-timing-commercial.mp4'
+  repository_dispatch:
+    types: [render-sleep-timing-commercial]
+  push:
+    branches: [main]
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Validate lint
+        run: npm run lint
+      - name: Resolve trigger inputs
+        run: |
+          echo "COMPOSITION_ID=${{ github.event.inputs.composition_id || github.event.client_payload.composition_id || 'SleepTimingCommercial' }}" >> $GITHUB_ENV
+          echo "OUTPUT_PATH=${{ github.event.inputs.output_path || github.event.client_payload.output_path || 'downloads/videos/sleep-timing-commercial.mp4' }}" >> $GITHUB_ENV
+      - name: Render video
+        run: npx remotion render remotion/index.ts "$COMPOSITION_ID" "$OUTPUT_PATH"
+      - name: Render thumbnail
+        run: npm run render:still
+      - name: Export mp4
+        run: npm run export
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sleep-timing-commercial
+          path: |
+            downloads/videos/sleep-timing-commercial.mp4
+            downloads/thumbnails/thumbnail.png
+            downloads/exports/manifest.json
+            downloads/exports/sleep-timing-commercial.mp4
