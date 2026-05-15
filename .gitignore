@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env.local
+.env.*.local
+downloads/videos/*.mp4
+downloads/thumbnails/*.png
+downloads/exports/*.zip
+temp/*
+!temp/.gitkeep
+remotion/renders/*
+!remotion/renders/.gitkeep
