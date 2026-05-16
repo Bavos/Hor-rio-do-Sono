@@ -1,144 +1,71 @@
-# Sono e Saúde Cardiovascular — Remotion Commercial
+# IA Conversacional: Riscos Psicológicos — Remotion
 
-Projeto completo para gerar um vídeo comercial vertical, estilo conversa de WhatsApp premium, sobre um estudo observacional que associou dormir entre **22h e 23h** a menor risco cardiovascular.
+Projeto React + TypeScript + Remotion para renderizar automaticamente um vídeo vertical cinematográfico de exatamente 30 segundos sobre riscos psicológicos do uso excessivo de inteligência artificial conversacional.
 
-O vídeo foi desenhado para redes sociais com linguagem curiosa, comercial e responsável: não afirma cura, não promete prevenção garantida e não diz que dormir nesse horário elimina risco cardíaco.
+## Resultado
+
+- Composição: `MainComposition`
+- Formato: 1080x1920 vertical
+- FPS: 30
+- Duração: 30 segundos exatos (`900` frames)
+- Saída: `downloads/video-final.mp4`
+- Áudio: nenhum
+- Imagens binárias externas: nenhuma
 
 ## Estrutura
 
 ```text
-project-root/
-├── backend/              # API Node.js/Express para healthcheck e metadados do vídeo
-├── frontend/             # React + Tailwind com preview do player Remotion
-├── remotion/             # Compositions, cenas, componentes, hooks e utilitários do vídeo
-├── automations/          # Workflow N8N para renderização programática
-├── prompts/              # Briefs e prompts operacionais
-├── agents/               # Documentação para agentes de IA/automação
-├── docs/                 # Fontes científicas internas e documentação técnica
-├── downloads/            # Saídas finais: videos, thumbnails e exports
-├── temp/                 # Arquivos temporários
-├── scripts/              # Scripts auxiliares de exportação
-├── github/workflows/     # Workflows de CI/CD solicitados
-├── .env                  # Variáveis ambiente não sensíveis de exemplo
-├── docker-compose.yml    # Deploy local em Docker
-├── README.md             # Documentação principal
-└── package.json          # Scripts e dependências
+backend/
+frontend/
+remotion/
+automations/
+prompts/
+agents/
+docs/
+downloads/
+temp/
+scripts/
+github/
+.github/workflows/render.yml
+.env
+docker-compose.yml
+README.md
+package.json
 ```
 
-## Especificações do vídeo
+## Cenas
 
-- **Composição:** `SleepTimingCommercial`
-- **Formato:** 1080x1920 vertical
-- **Duração:** 35 segundos
-- **FPS:** 30
-- **Áudio:** sem narrador, sem música e sem som
-- **Estilo:** WhatsApp moderno premium, fundo escuro sofisticado e balões diferenciados por pessoa
-- **Tom:** curiosidade de saúde baseada em estudo observacional
+1. 0s–4s — abertura futurista com cidade noturna, celular, notificações e pergunta de impacto.
+2. 4s–8s — uso excessivo durante a madrugada com múltiplos chats e olhos cansados.
+3. 8s–12s — perda de contato com a realidade com feeds digitais cobrindo a cena.
+4. 12s–16s — cérebro holográfico, conexões neurais, estímulos e dados.
+5. 16s–21s — chat hipnótico em tela dominante, sem marcas reais.
+6. 21s–26s — colapso digital com excesso elegante de informações.
+7. 26s–30s — fechamento humano com luz natural e uso consciente.
 
-## Instalação
+## Comandos
 
 ```bash
 npm install
-```
-
-## Desenvolvimento
-
-Preview web com React + Tailwind:
-
-```bash
-npm run dev
-```
-
-Backend Node.js:
-
-```bash
-npm run backend:dev
-```
-
-Remotion Studio:
-
-```bash
-npm run remotion:studio
-```
-
-## Renderização
-
-Gerar MP4 final em `downloads/videos/`:
-
-```bash
+npm run build
+npm run validate
 npm run render
 ```
 
-Gerar thumbnail em `downloads/thumbnails/`:
+## GitHub Actions
+
+O workflow obrigatório está em `.github/workflows/render.yml` e executa automaticamente em push na branch `main`, além de permitir execução manual. Ele renderiza com o comando:
 
 ```bash
-npm run render:still
+npx remotion render remotion/src/index.ts MainComposition downloads/video-final.mp4 --codec=h264 --overwrite
 ```
 
-Exportar cópia final e manifesto SHA-256 para `downloads/exports/`:
+O MP4 final é enviado como artifact chamado `video-remotion-final`, permitindo download direto do vídeo renderizado.
+
+## Docker
 
 ```bash
-npm run export
+docker compose up --build
 ```
 
-Pipeline completo recomendado:
-
-```bash
-npm run render && npm run render:still && npm run export
-```
-
-## Qualidade e CI
-
-```bash
-npm run lint
-npm run typecheck
-npm run build
-npm run ci
-```
-
-Os workflows em `github/workflows/` executam instalação de dependências, lint, typecheck, renderização Remotion, exportação MP4 e upload de artifacts.
-
-> Observação: se este projeto for usado diretamente no GitHub Actions, mova ou espelhe `github/workflows/` para `.github/workflows/`, caso o provedor exija o caminho padrão do GitHub.
-
-## Variáveis ambiente
-
-As variáveis estão em `.env` como valores não sensíveis de desenvolvimento:
-
-| Variável | Uso |
-| --- | --- |
-| `NODE_ENV` | Ambiente de execução |
-| `PORT` | Porta do backend Express |
-| `PUBLIC_APP_NAME` | Nome público do projeto |
-| `REMOTION_COMPOSITION_ID` | ID da composição Remotion |
-| `REMOTION_OUTPUT` | Caminho esperado para o MP4 final |
-
-Nunca salve tokens, chaves de API ou credenciais reais no repositório. Use secrets do provedor de CI/CD em produção.
-
-## Automação N8N
-
-O arquivo `automations/n8n-render-workflow.json` contém um fluxo base com:
-
-1. Webhook de disparo.
-2. Execução do comando `npm run render && npm run render:still && npm run export`.
-3. Saída do render nos diretórios `downloads/`.
-
-Em produção, recomenda-se isolar a renderização em fila, validar payloads, registrar logs e limitar permissões do worker.
-
-## Fontes científicas usadas
-
-As fontes estão documentadas internamente em `docs/sources.md` e não aparecem no vídeo:
-
-1. **European Heart Journal – Digital Health** — “Accelerometer-derived sleep onset timing and cardiovascular disease incidence: a UK Biobank cohort study”.
-2. **British Heart Foundation** — análise pública reforçando associação e ausência de prova de causa e efeito.
-
-## Aviso de responsabilidade
-
-Este conteúdo é exclusivamente informativo e educativo. Ele não substitui orientação médica, diagnóstico, tratamento ou acompanhamento individualizado com profissional de saúde. O estudo citado é observacional e indica associação, não causalidade nem prevenção garantida.
-
-## Deploy com Docker
-
-```bash
-docker compose up app
-```
-
-O serviço sobe o backend em `http://localhost:3333` e disponibiliza `/health` e `/api/video-spec`.
+O container instala dependências, valida o build TypeScript e renderiza `downloads/video-final.mp4`.

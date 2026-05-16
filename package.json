@@ -1,48 +1,36 @@
 {
-  "name": "sono-cardio-whatsapp-video",
+  "name": "ia-conversacional-riscos-remotion",
   "version": "1.0.0",
   "private": true,
-  "description": "Projeto Remotion para vídeo vertical comercial estilo conversa de WhatsApp sobre horário de sono e saúde cardiovascular.",
+  "description": "Vídeo vertical Remotion de 30 segundos sobre riscos psicológicos do uso excessivo de IA conversacional.",
   "type": "module",
   "scripts": {
-    "dev": "vite --host 0.0.0.0",
-    "backend:dev": "node backend/server.js",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx --max-warnings=0",
+    "build": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "remotion:studio": "remotion studio remotion/index.ts",
-    "render": "remotion render remotion/index.ts SleepTimingCommercial downloads/videos/sleep-timing-commercial.mp4",
-    "render:still": "remotion still remotion/index.ts SleepTimingCommercial downloads/thumbnails/thumbnail.png --frame=960",
-    "export": "node scripts/export-render.js",
-    "build": "vite build",
-    "ci": "npm run lint && npm run typecheck && npm run build"
+    "studio": "remotion studio remotion/src/index.ts",
+    "render": "npx remotion render remotion/src/index.ts MainComposition downloads/video-final.mp4 --codec=h264 --overwrite",
+    "render:ci": "mkdir -p downloads && npm run render",
+    "validate": "node scripts/validate-project.mjs",
+    "preview:data": "node backend/server.js"
   },
   "dependencies": {
     "@remotion/cli": "^4.0.320",
-    "@remotion/player": "^4.0.320",
     "@remotion/renderer": "^4.0.320",
-    "@remotion/three": "^4.0.320",
-    "@vitejs/plugin-react": "^5.0.0",
     "express": "^5.1.0",
     "helmet": "^8.1.0",
     "morgan": "^1.10.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "remotion": "^4.0.320",
-    "typescript": "^5.8.3",
-    "vite": "^7.0.0"
+    "typescript": "^5.8.3"
   },
   "devDependencies": {
-    "@eslint/js": "^9.27.0",
     "@types/express": "^5.0.2",
     "@types/node": "^22.15.19",
     "@types/react": "^19.1.4",
-    "@types/react-dom": "^19.1.5",
-    "autoprefixer": "^10.4.21",
-    "eslint": "^9.27.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "globals": "^16.1.0",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^3.4.17",
-    "typescript-eslint": "^8.59.3"
+    "@types/react-dom": "^19.1.5"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

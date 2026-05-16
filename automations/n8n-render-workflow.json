@@ -1,8 +1,23 @@
 {
-  "name": "Render Remotion - Sono Cardiovascular",
+  "name": "Acionamento externo do render Remotion",
   "nodes": [
-    { "parameters": { "path": "render-sono-cardio", "responseMode": "lastNode" }, "name": "Webhook", "type": "n8n-nodes-base.webhook", "typeVersion": 2, "position": [0, 0] },
-    { "parameters": { "command": "npm run render && npm run render:still && npm run export" }, "name": "Render Remotion", "type": "n8n-nodes-base.executeCommand", "typeVersion": 1, "position": [260, 0] }
+    {
+      "type": "Webhook",
+      "purpose": "Receber solicitação de renderização sob demanda"
+    },
+    {
+      "type": "HTTP Request",
+      "purpose": "Chamar a API do GitHub Actions workflow_dispatch para .github/workflows/render.yml"
+    },
+    {
+      "type": "Respond to Webhook",
+      "purpose": "Retornar status de acionamento sem expor tokens"
+    }
   ],
-  "connections": { "Webhook": { "main": [[{ "node": "Render Remotion", "type": "main", "index": 0 }]] } }
+  "security": {
+    "githubToken": "armazenar somente em credenciais/variáveis de ambiente do N8N",
+    "payloadValidation": true,
+    "secretsInLogs": false
+  },
+  "artifact": "video-remotion-final"
 }

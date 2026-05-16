@@ -1,0 +1,21 @@
+{
+  "name": "Renderização automática Remotion",
+  "trigger": "push na branch main ou workflow_dispatch no GitHub Actions",
+  "composition": "MainComposition",
+  "input": "remotion/src/index.ts",
+  "output": "downloads/video-final.mp4",
+  "artifact": "video-remotion-final",
+  "steps": [
+    "checkout do repositório",
+    "instalação do Node.js 20",
+    "npm install",
+    "npm run build --if-present",
+    "npx remotion render remotion/src/index.ts MainComposition downloads/video-final.mp4 --codec=h264 --overwrite",
+    "upload do MP4 como artifact"
+  ],
+  "security": {
+    "secretsRequired": false,
+    "externalMediaDownloads": false,
+    "audio": false
+  }
+}
