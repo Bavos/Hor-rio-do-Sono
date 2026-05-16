@@ -1,8 +1,3 @@
-# Agentes
+# Agentes do projeto
 
-Espaço reservado para agentes de automação ou IA responsáveis por:
-
-- gerar variações de roteiro;
-- acionar renderizações Remotion;
-- validar linguagem médica responsável;
-- registrar logs sem dados sensíveis.
+Este diretório documenta responsabilidades operacionais para automações de renderização, revisão e publicação do vídeo Remotion `MainComposition`.

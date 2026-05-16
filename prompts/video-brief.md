@@ -1,5 +1,3 @@
-# Brief do vídeo
+# Prompt de vídeo
 
-Criar vídeo vertical 1080x1920, 35s, 30fps, estilo conversa WhatsApp premium, sem áudio, sem narrador e sem marcas jornalísticas.
-
-Mensagem central: estudo observacional com mais de 88 mil participantes associou início do sono entre 22h e 23h a menor risco cardiovascular. Comunicar como curiosidade responsável, sem prometer cura, prevenção garantida ou eliminação de risco.
+Criar um mini-documentário vertical de 30 segundos, cinematográfico, sem áudio, sobre riscos psicológicos do uso excessivo de IA conversacional. Usar motion graphics densos, HUDs, feeds digitais, partículas, celular, cérebro holográfico e fechamento humanizado com luz natural.
